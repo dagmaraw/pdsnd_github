@@ -94,6 +94,11 @@ def load_data(city, month, day):
     return df
 
 def print_raw_data(df):
+    """
+    Asks user if they want to see 5 lines of raw data and prints them.
+    Repeats until user types no.
+    """
+    
     num_rows = df.shape[0]
     #print('Number of rows is {}'.format(num_rows))
     see_raw_data = input('\nWould you like to see 5 lines of the raw data? Enter yes or no: ')

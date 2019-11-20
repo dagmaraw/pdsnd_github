@@ -23,7 +23,8 @@ def get_filters():
     while invalid:
         city = input('Enter the city for which you would like bikeshare info (Chicago, New York City, or Washington): ')
         city = city.lower()
-        if city!='chicago' and city!='new york city' and city!='washington':
+        cities = {'chicago','new york city','washington'}
+        if city not in cities:
             print('\nYou\'ve entered an invalid city. Please enter one of Chicago, New York City, or Washington.')
         else:
             invalid = False
@@ -33,8 +34,8 @@ def get_filters():
     while invalid:
         month = input('Enter the month (January through June) for which you would like the bikeshare info, or \'all\' for all months: ')
         month = month.lower()
-        if month!='january' and month!='february' and month!='march' \
-        and month!='april' and month!='may' and month!='june' and month!='all':
+        months = {'january','february','march','april','may','june','all'}
+        if month not in months:
             print('\nYou\'ve entered an invalid month. Try again.')
         else:
             invalid = False
@@ -44,8 +45,8 @@ def get_filters():
     while invalid:
         day = input('Enter the day of the week (full word) for which you would like the bikeshare info, or \'all\' for all days: ')
         day = day.lower()
-        if day!='monday' and day!='tuesday' and day!='wednesday' and day!='thursday' \
-        and day!='friday' and day!='saturday' and day!='sunday' and day!='all':
+        days = {'monday','tuesday','wednesday','thursday','friday','saturday','sunday','all'}
+        if day not in days:
             print('\nYou\'ve entered an invalid day of the week. Try again.')
         else:
             invalid = False
@@ -197,7 +198,7 @@ def user_stats(df,city):
     print('The following is the count of the different user types renting bikes in this city during the requested month(s)/day(s):\n{}\n'
           .format(df['User Type'].value_counts()))
 
-    if city=='chicago' or city=='new york city':
+    if city in {'chicago','new york city'}:
         # TO DO: Display counts of gender
         print('The following is the count of the genders renting bikes in this city during the requested month(s)/day(s):\n{}\n'
               .format(df['Gender'].value_counts()))

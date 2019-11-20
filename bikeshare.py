@@ -18,7 +18,7 @@ def get_filters():
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
     """
     print('\nHello! Let\'s explore some US bikeshare data!')
-    # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
+    # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
     invalid = True
     while invalid:
         city = input('Enter the city for which you would like bikeshare info (Chicago, New York City, or Washington): ')
@@ -27,7 +27,7 @@ def get_filters():
         else:
             invalid = False
 
-    # TO DO: get user input for month (all, january, february, ... , june)
+    # get user input for month (all, january, february, ... , june)
     invalid = True
     while invalid:
         month = input('Enter the month (January through June) for which you would like the bikeshare info, or \'all\' for all months: ')
@@ -37,7 +37,7 @@ def get_filters():
         else:
             invalid = False
 
-    # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
+    # get user input for day of week (all, monday, tuesday, ... sunday)
     invalid = True
     while invalid:
         day = input('Enter the day of the week (full word) for which you would like the bikeshare info, or \'all\' for all days: ')
@@ -98,7 +98,7 @@ def print_raw_data(df):
     Asks user if they want to see 5 lines of raw data and prints them.
     Repeats until user types no.
     """
-    
+
     num_rows = df.shape[0]
     #print('Number of rows is {}'.format(num_rows))
     see_raw_data = input('\nWould you like to see 5 lines of the raw data? Enter yes or no: ')
@@ -126,18 +126,18 @@ def time_stats(df,month,day):
     print('\nCalculating The Most Frequent Times of Travel...\n')
     start_time = time.time()
 
-    # TO DO: display the most common month
+    # display the most common month
     if month.lower() == 'all': # doesn't make sense to display the most popular month if we've filtered to only one month
         popular_month = df['month'].mode()[0] # this returns a number now
         months = ['january', 'february', 'march', 'april', 'may', 'june']
         print('The most popular month for bike rentals in this city on the requested day(s) is {}.'.format(months[popular_month-1].title()))
 
-    # TO DO: display the most common day of week
+    # display the most common day of week
     if day.lower() == 'all': # doesn't make sense to display the most popular day of week if we've filtered to only one day
         popular_day = df['day_of_week'].mode()[0] # this returns a capitalized string
         print('The most popular day of the week for bike rentals in this city in the requested month(s) is {}.'.format(popular_day))
 
-    # TO DO: display the most common start hour
+    # display the most common start hour
     popular_time = df['start_hour'].mode()[0] # this returns a capitalized string
     print('The most popular starting hour for bike rentals in this city during the requested month(s)/day(s) is {}.'.format(popular_time))
 
@@ -151,15 +151,15 @@ def station_stats(df):
     print('\nCalculating The Most Popular Stations and Trip...\n')
     start_time = time.time()
 
-    # TO DO: display most commonly used start station
+    # display most commonly used start station
     popular_start_station = df['Start Station'].mode()[0]
     print('The most popular origin for bike rentals in this city during the requested month(s)/day(s) is {}.'.format(popular_start_station))    
 
-    # TO DO: display most commonly used end station
+    # display most commonly used end station
     popular_end_station = df['End Station'].mode()[0]
     print('The most popular destination for bike rentals in this city during the requested month(s)/day(s) is {}.'.format(popular_end_station))  
 
-    # TO DO: display most frequent combination of start station and end station trip
+    # display most frequent combination of start station and end station trip
     #print(df[['Start Station','End Station']].mode()[0]) #*******************************************************
     #sub = df[['Start Station','End Station']]
     df['Route'] = df['Start Station'] + ' to ' + df['End Station']
@@ -177,11 +177,11 @@ def trip_duration_stats(df):
     print('\nCalculating Trip Duration...\n')
     start_time = time.time()
 
-    # TO DO: display total travel time
+    # display total travel time
     print('The total travel time (rounded to nearest hour) for the requested month(s)/day(s) for bike rentals in this city is {} hours.'
           .format(int(round(df['Trip Duration'].sum()/60/60))))
 
-    # TO DO: display mean travel time
+    # display mean travel time
     print('The average travel time (rounded to nearest minute) for the requested month(s)/day(s) for bike rentals in this city is {} minutes.'
           .format(int(round(df['Trip Duration'].mean()/60))))
 
@@ -195,16 +195,16 @@ def user_stats(df,city):
     print('\nCalculating User Stats...\n')
     start_time = time.time()
 
-    # TO DO: Display counts of user types
+    # display counts of user types
     print('The following is the count of the different user types renting bikes in this city during the requested month(s)/day(s):\n{}\n'
           .format(df['User Type'].value_counts()))
 
     if city.lower()=='chicago' or city.lower()=='new york city':
-        # TO DO: Display counts of gender
+        # display counts of gender
         print('The following is the count of the genders renting bikes in this city during the requested month(s)/day(s):\n{}\n'
               .format(df['Gender'].value_counts()))
 
-        # TO DO: Display earliest, most recent, and most common year of birth
+        # display earliest, most recent, and most common year of birth
         print('The oldest person who rented bikes in this city during the requested month(s)/day(s) was born in {}.'
               .format(int(df['Birth Year'].min())))
         print('The youngest person who rented bikes in this city during the requested month(s)/day(s) was born in {}.'

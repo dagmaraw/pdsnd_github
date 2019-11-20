@@ -22,7 +22,8 @@ def get_filters():
     invalid = True
     while invalid:
         city = input('Enter the city for which you would like bikeshare info (Chicago, New York City, or Washington): ')
-        if city.lower()!='chicago' and city.lower()!='new york city' and city.lower()!='washington':
+        city = city.lower()
+        if city!='chicago' and city!='new york city' and city!='washington':
             print('\nYou\'ve entered an invalid city. Please enter one of Chicago, New York City, or Washington.')
         else:
             invalid = False
@@ -31,8 +32,9 @@ def get_filters():
     invalid = True
     while invalid:
         month = input('Enter the month (January through June) for which you would like the bikeshare info, or \'all\' for all months: ')
-        if month.lower()!='january' and month.lower()!='february' and month.lower()!='march' \
-        and month.lower()!='april' and month.lower()!='may' and month.lower()!='june' and month.lower()!='all':
+        month = month.lower()
+        if month!='january' and month!='february' and month!='march' \
+        and month!='april' and month!='may' and month!='june' and month!='all':
             print('\nYou\'ve entered an invalid month. Try again.')
         else:
             invalid = False
@@ -41,14 +43,15 @@ def get_filters():
     invalid = True
     while invalid:
         day = input('Enter the day of the week (full word) for which you would like the bikeshare info, or \'all\' for all days: ')
-        if day.lower()!='monday' and day.lower()!='tuesday' and day.lower()!='wednesday' and day.lower()!='thursday' \
-        and day.lower()!='friday' and day.lower()!='saturday' and day.lower()!='sunday' and day.lower()!='all':
+        day = day.lower()
+        if day!='monday' and day!='tuesday' and day!='wednesday' and day!='thursday' \
+        and day!='friday' and day!='saturday' and day!='sunday' and day!='all':
             print('\nYou\'ve entered an invalid day of the week. Try again.')
         else:
             invalid = False
 
     print('-'*40)
-    return city, month, day
+    return city, month, day # These are now all lowercase in the rest of the code
 
 
 def load_data(city, month, day):
@@ -75,7 +78,6 @@ def load_data(city, month, day):
     
     df['start_hour'] = df['Start Time'].dt.hour
 
-    month = month.lower()
     # filter by month if applicable
     if month != 'all':
         # use the index of the months list to get the corresponding int
@@ -86,7 +88,6 @@ def load_data(city, month, day):
         df = df[df['month']==month]
 
     # filter by day of week if applicable
-    day = day.lower()
     if day != 'all':
         # filter by day of week to create the new dataframe
         df = df[df['day_of_week']==day.title()]
@@ -97,15 +98,17 @@ def print_raw_data(df):
     num_rows = df.shape[0]
     #print('Number of rows is {}'.format(num_rows))
     see_raw_data = input('\nWould you like to see 5 lines of the raw data? Enter yes or no: ')
-    while see_raw_data.lower()!='no':
-        if see_raw_data.lower()=='yes':
+    see_raw_data = see_raw_data.lower()
+    while see_raw_data!='no':
+        if see_raw_data=='yes':
             print(df.iloc[:5])
             s=5
-            while see_raw_data.lower()!='no':
+            while see_raw_data!='no':
                 see_raw_data = input('\nWould you like to see 5 more lines of the raw data? Enter yes or no: ')
-                if see_raw_data.lower()!='yes' and see_raw_data.lower()!='no':
+                see_raw_data = see_raw_data.lower()
+                if see_raw_data!='yes' and see_raw_data!='no':
                     print('\nInvalid response. Please enter yes to see 5 more lines, or no to continue. ')
-                elif see_raw_data.lower()=='yes':
+                elif see_raw_data=='yes':
                     if s+5>num_rows: #if user tries to go past available rows
                         print('This is the end of the file. Displaying rest of data.')
                         print(df.iloc[s:])
@@ -122,13 +125,13 @@ def time_stats(df,month,day):
     start_time = time.time()
 
     # TO DO: display the most common month
-    if month.lower() == 'all': # doesn't make sense to display the most popular month if we've filtered to only one month
+    if month == 'all': # doesn't make sense to display the most popular month if we've filtered to only one month
         popular_month = df['month'].mode()[0] # this returns a number now
         months = ['january', 'february', 'march', 'april', 'may', 'june']
         print('The most popular month for bike rentals in this city on the requested day(s) is {}.'.format(months[popular_month-1].title()))
 
     # TO DO: display the most common day of week
-    if day.lower() == 'all': # doesn't make sense to display the most popular day of week if we've filtered to only one day
+    if day == 'all': # doesn't make sense to display the most popular day of week if we've filtered to only one day
         popular_day = df['day_of_week'].mode()[0] # this returns a capitalized string
         print('The most popular day of the week for bike rentals in this city in the requested month(s) is {}.'.format(popular_day))
 
@@ -194,7 +197,7 @@ def user_stats(df,city):
     print('The following is the count of the different user types renting bikes in this city during the requested month(s)/day(s):\n{}\n'
           .format(df['User Type'].value_counts()))
 
-    if city.lower()=='chicago' or city.lower()=='new york city':
+    if city=='chicago' or city=='new york city':
         # TO DO: Display counts of gender
         print('The following is the count of the genders renting bikes in this city during the requested month(s)/day(s):\n{}\n'
               .format(df['Gender'].value_counts()))
